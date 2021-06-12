@@ -1,1 +1,60 @@
-test
+6/11/2021
+
+Description:
+
+Initial setup as ec2-user
+
+
+1. Update the system
+
+sudo yum upgrade -y
+
+2. Make manage file
+
+mkdir jmanage
+
+3. Install needed tools
+
+sudo yum install wget -y
+sudo yum install unzip -y
+sudo yum install python3 -y
+sudo yum install net-tools -y
+yum install java-1.8.0-openjdk.x86_64 -y
+
+123:
+
+sudo yum upgrade -y
+mkdir jmanage
+sudo yum install wget -y
+sudo yum install unzip -y
+sudo yum install git -y
+sudo yum install python3 -y
+sudo yum install net-tools -y
+yum install java-1.8.0-openjdk.x86_64 -y
+
+4. Install AWS cli
+
+cd /home/ec2-user/jmanage
+mkdir aws-cli-install
+cd aws-cli-install
+sudo wget -O ./awscli-exe-linux-x86_64.zip "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
+unzip awscli-exe-linux-x86_64.zip
+sudo ./aws/install
+export PATH=$PATH:/usr/local/bin/aws
+
+5. Install tomcat
+
+sudo useradd tomcat
+sudo passwd tomcat
+sudo usermod -aG wheel tomcat
+sudo su tomcat
+
+sudo mkdir -p /home/tomcat/opt/tomcat/
+cd /home/tomcat/opt/tomcat/
+
+wget https://mirrors.sonic.net/apache/tomcat/tomcat-8/v8.5.66/bin/apache-tomcat-8.5.66.tar.gz
+tar -zxvf apache-tomcat-8.5.66.tar.gz -C /home/tomcat/opt/tomcat --strip-components=1
+
+echo export CATALINA_HOME="/home/tomcat/opt/tomcat" >> /home/tomcat/.bashrc
+source /home/tomcat/.bashrc
+bash /home/tomcat/opt/tomcat/bin/startup.sh
